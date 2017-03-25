@@ -60,11 +60,22 @@ trait DependableDeleteTrait {
         $related = $relationship->getModel();
 
         if (isset($this->toDelete)) {
-            $relatedQuery = $related->whereIn($relationship->getForeignKeyName(), $this->getDeletableForeignKeys());
-            $this->setDeletableForeignKeys($relatedQuery->get()->pluck('id')->toArray(), $related);
+            $relatedQuery = $related->whereIn(
+                $relationship->getForeignKeyName(),
+                $this->getDeletableForeignKeys()
+            );
+
+            $this->setDeletableForeignKeys(
+                $relatedQuery->get()->pluck('id')->toArray(),
+                $related
+            );
+
             $relatedQuery->delete();
         } else {
-            $this->setDeletableForeignKeys($relationship->get()->pluck($related->getKeyName())->toArray(), $related);
+            $this->setDeletableForeignKeys(
+                $relationship->get()->pluck($related->getKeyName())->toArray(),
+                $related
+            );
             $relationship->delete();
         }
 
@@ -95,8 +106,10 @@ trait DependableDeleteTrait {
 
         $foreignKeyName = $this->guessForeignKeyName($belongsToMany);
 
-        $pivotRelation->newQuery()->whereIn($foreignKeyName, $this->getForeignKeyIds($belongsToMany, $foreignKeyName))
-            ->update(['deleted_at' => DB::raw('NOW()')]);
+        $pivotRelation->newQuery()->whereIn(
+            $foreignKeyName,
+            $this->getForeignKeyIds($belongsToMany, $foreignKeyName))->update(['deleted_at' => DB::raw('NOW()')]
+        );
     }
 
     /**
