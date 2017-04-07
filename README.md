@@ -15,7 +15,7 @@ Now add the service provider in config/app.php file:
 ``` bash
 'providers' => [
     // ...
-    Spatie\Permission\PermissionServiceProvider::class,
+    NitinKaware\DependableSoftDeletable\SoftDeletableServiceProvider::class,
 ];
 ```
 
