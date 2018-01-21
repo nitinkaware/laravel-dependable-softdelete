@@ -130,11 +130,11 @@ trait DependableDeleteTrait {
      */
     public static function getDeletableRelationships()
     {
-        if (isset(static::$dependableRelationships)) {
-            return static::$dependableRelationships;
+        if (isset(static::$dependables) && is_array(static::$dependables)) {
+            return static::$dependables;
         }
 
-        throw new Exception("No dependable relationship array provided");
+        throw new Exception("No dependable relationship provided.");
     }
 
     /**
