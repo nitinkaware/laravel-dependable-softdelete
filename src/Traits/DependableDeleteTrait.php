@@ -42,9 +42,6 @@ trait DependableDeleteTrait {
             case $relationship instanceof BelongsToMany:
                 $this->deleteDependableBelongsToMany($relationship);
                 break;
-            case $relationship instanceof BelongsTo:
-                $this->deleteDependableBelongsTo($relationship);
-                break;
         }
     }
 
@@ -110,16 +107,6 @@ trait DependableDeleteTrait {
             $foreignKeyName,
             $this->getForeignKeyIds($belongsToMany, $foreignKeyName))->update(['deleted_at' => DB::raw('NOW()')]
         );
-    }
-
-    /**
-     * Delete dependable belongsTo relationship.
-     *
-     * @param $relationship
-     */
-    public function deleteDependableBelongsTo($relationship)
-    {
-        $relationship->delete();
     }
 
     /**
